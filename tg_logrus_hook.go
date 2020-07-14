@@ -48,18 +48,9 @@ func (hook *Hook) Fire(logEntry *logrus.Entry) error {
 		notifyErr,
 	)
 
-	logEntry.Logger.Debug(msg)
-	result, err := hook.Client.Send(msg)
-	logEntry.Logger.Debug(result)
+	_, err := hook.Client.Send(msg)
 
-	if err != nil {
-		logEntry.Logger.WithFields(logrus.Fields{
-			"source": "telegram",
-			"error":  err,
-		}).Warn("Failed to send error to Telegram")
-	}
-
-	return nil
+	return err
 }
 
 // Levels setting
